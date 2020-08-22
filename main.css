@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Baloo Tamma 2', cursive;
+  background-image: url("bg.png");
+  background-color: #5c1919;
+  height: 100vh;
+  font-weight: 400;
+}
+
+.hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.starter {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  transition: all 1s ease-in-out;
+}
+
+.starter h3 {
+  font-size: 4rem;
+  color: #fff;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.starter button {
+  border: 0;
+  outline: 0;
+  padding: 2rem 4rem;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #ce3e09;
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.container {
+  width: 60%;
+  padding: 2rem;
+  min-height: 90vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+.container .left {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2.5rem;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 2rem;
+}
+
+.container .left__question {
+  margin-right: 5rem;
+}
+
+.container .left span {
+  color: #09ce23;
+}
+
+.container .quize__container {
+  display: grid;
+  grid-template-columns: 5rem max-content;
+  grid-template-rows: repeat(2, min-content);
+  gap: 0 3rem;
+}
+
+.container .quize__number {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+}
+
+.container .quize__number #number {
+  padding: 3rem 2rem;
+  display: inline-block;
+  background-color: #fff;
+  font-size: 3rem;
+  line-height: 0;
+  color: #222;
+}
+
+.container .quize__body {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.container .quize__details {
+  border-bottom: 1px solid #fff;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.container .quize__details pre {
+  font-size: 2rem;
+}
+
+.container .quize__question {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.container .quize__answer {
+  margin-bottom: 2rem;
+}
+
+.container .quize__answer textarea {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+.container .quize__btns {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}
+
+.container .quize__btns .next {
+  border: 0;
+  outline: 0;
+  border-radius: 3px;
+  padding: 1rem 3.5rem;
+  font-size: 1.6rem;
+  color: #fff;
+  -webkit-box-shadow: 5px 5px 15px 1px #000000;
+  box-shadow: 5px 5px 15px 1px #000000;
+  display: inline-block;
+  cursor: pointer;
+  background-color: #78281F;
+}
+
+.container .quize__btns .next:active {
+  -webkit-box-shadow: 0px 0px 0px 0px #000000;
+  box-shadow: 0px 0px 0px 0px #000000;
+}
+/*# sourceMappingURL=main.css.map */

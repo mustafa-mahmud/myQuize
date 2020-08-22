@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Quize</title>
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+	<link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+	<div class="starter">
+		<h3>PHP Operator</h3>
+		<button class="start">Start ?</button>
+	</div>
+	<div class="container">
+		<div class="left">
+			<div class="left__question">
+				Questions Left: <span class="qLeft">5/10</span>
+			</div>
+			<div class="left__time">
+				Time Left <span class="tLeft">45</span>
+			</div>
+		</div>
+		<div class="quize">
+			<div class="quize__container">
+				<div class="quize__number">
+					<span id="number">1</span>
+				</div>
+				<div class="quize__body">
+					<div class="quize__details">
+						<pre>
+$x = 100;
+$y = 50;
+							
+if ($x == 100 and $y == 50) {
+	echo "IF";
+}else{
+	echo "ELSE";
+}
+						</pre>
+					</div>
+					<div class="quize__question">
+						Which will be output? IF or ELSE
+					</div>
+					<div class="quize__answer">
+						<textarea rows="6" id="userAns" placeholder="Your Answer Here..."></textarea>
+					</div>
+				</div>
+				<div class="quize__btns">
+					<button class="next">Next</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/app.js"></script>
+</body>
+
+</html>
