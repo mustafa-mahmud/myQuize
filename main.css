@@ -72,6 +72,12 @@ body {
   color: #fff;
 }
 
+@media only screen and (max-width: 950px) {
+  .container {
+    width: 90%;
+  }
+}
+
 .container .left {
   display: flex;
   justify-content: flex-end;
@@ -90,7 +96,7 @@ body {
 
 .container .quize__container {
   display: grid;
-  grid-template-columns: 5rem max-content;
+  grid-template-columns: 5rem 1fr;
   grid-template-rows: repeat(2, min-content);
   gap: 0 3rem;
 }
@@ -121,6 +127,10 @@ body {
 }
 
 .container .quize__details pre {
+  display: initial;
+}
+
+.container .quize__details pre code {
   font-size: 2rem;
 }
 

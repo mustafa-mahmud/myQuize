@@ -93,6 +93,10 @@ body {
 	transform: translate(-50%, -50%);
 	color: #fff;
 
+	@media only screen and (max-width: 950px) {
+		width: 90%;
+	}
+
 	.left {
 		display: flex;
 		justify-content: flex-end;
@@ -114,7 +118,7 @@ body {
 	.quize {
 		&__container {
 			display: grid;
-			grid-template-columns: 5rem max-content;
+			grid-template-columns: 5rem 1fr;
 			grid-template-rows: repeat(2, min-content);
 			gap: 0 3rem;
 		}
@@ -144,7 +148,11 @@ body {
 			margin-bottom: 2rem;
 
 			pre {
-				font-size: 2rem;
+				display: initial;
+
+				code {
+					font-size: 2rem;
+				}
 			}
 		}
 
