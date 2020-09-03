@@ -22,6 +22,14 @@ body {
 	opacity: 0;
 }
 
+#email {
+	display: inline-block;
+	padding: 1.5rem;
+	width: 40rem;
+	font-size: 2rem;
+	margin-bottom: 4rem;
+}
+
 @mixin btns($background) {
 	border: 0;
 	outline: 0;

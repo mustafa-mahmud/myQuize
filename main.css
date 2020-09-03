@@ -21,6 +21,14 @@ body {
   opacity: 0;
 }
 
+#email {
+  display: inline-block;
+  padding: 1.5rem;
+  width: 40rem;
+  font-size: 2rem;
+  margin-bottom: 4rem;
+}
+
 .hide {
   opacity: 0 !important;
   visibility: hidden !important;

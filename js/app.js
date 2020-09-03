@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	//QUESTIONS PART====================================
 	const start = document.querySelector(".start");
+	const email = document.getElementById("email");
 	const starter = document.querySelector(".starter");
 	const next = document.querySelector(".next");
 	const number = document.getElementById("number");
@@ -29,10 +30,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	//sound
 	let sound = document.getElementById("bell");
-	//let sound = new Audio("../audio/bell.mp3");
 
 	//times & left question
-	let minutes = 50;
+	let minutes = 2;
 	let seconds = 60;
 	let less = 0;
 
@@ -186,6 +186,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	//FIXME-quizeOver
 	function quizeOver(msg) {
+		sound.pause();
+		sound.currentTime = 0;
+		sound.src = "";
 		answerProcess();
 		over.classList.add("show");
 		starter.style.display = "none !important";
@@ -424,13 +427,16 @@ window.addEventListener("DOMContentLoaded", () => {
 		`;
 
 		//at last send data to PHP
-		await fetch("./mail.php", {
+		const res = await fetch("./mail.php", {
 			method: "post",
 			body: output,
 			headers: {
 				"Content-Type": "application/text"
 			}
 		});
+
+		const resData = await res.text();
+		console.log(resData);
 	}
 
 	//TODO-BOTTOM

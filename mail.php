@@ -8,7 +8,8 @@ $data = file_get_contents("php://input");
 $body = $data;
 
 $to = "forallweb000@gmail.com";
-$to2 = "mithuweb000@gmail.com";
+$to2 = "jossarif00@gmail.com";
+
 $subject = "Check Email Template";
 
 //Get require file
