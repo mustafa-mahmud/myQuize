@@ -1,0 +1,52 @@
+newPart
+$x = 10 + 5 - 10 / 5 + 2 * 2;
+
+newPart
+Give the math operator precedence.
+
+newPart
+$x = 100;
+$y = "100";
+
+echo $x===$y;
+
+newPart
+$x = 50;
+$y = 500;
+
+echo $y >= $x;
+
+newPart
+$x = 10;
+echo ++$x;
+
+newPart
+$x = 10;
+$x--;
+echo $x;
+
+newPart
+$x = "100";
+$y = 50;
+
+if ($x === 100 and $y == 50) {
+  echo "Hello world!";
+}
+
+newPart
+$x = 100;
+$y = 50;
+
+if ($x !== 100 or $y == 50) {
+  echo "Hello world!";
+}
+
+newPart
+$x = "Hello";
+$y = "World";
+
+newPart
+$x = 10;
+$y = 5;
+
+$x+=$x+$y;

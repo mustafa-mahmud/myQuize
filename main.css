@@ -16,9 +16,18 @@ body {
   font-weight: 400;
 }
 
+#bell {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .hide {
   opacity: 0 !important;
   visibility: hidden !important;
+}
+
+.show {
+  display: flex !important;
 }
 
 .starter {
@@ -27,15 +36,15 @@ body {
   top: 0;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #000;
   opacity: 1;
   visibility: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  display: none;
-  transition: all 1s ease-in-out;
+  z-index: 999;
+  transition: all 0.5s ease-in-out;
 }
 
 .starter h3 {
@@ -60,6 +69,35 @@ body {
   cursor: pointer;
 }
 
+.over {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.over .msg {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+}
+
+.over p {
+  font-size: 2.5rem;
+  color: #ce3e09;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .container {
   width: 60%;
   padding: 2rem;
@@ -67,8 +105,7 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
   position: relative;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   color: #fff;
 }
 
@@ -80,7 +117,7 @@ body {
 
 .container .left {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   font-size: 2.5rem;
   border-bottom: 2px solid #fff;
   margin-bottom: 2rem;
@@ -88,6 +125,16 @@ body {
 
 .container .left__question {
   margin-right: 5rem;
+}
+
+.container .left__question .qLeft {
+  width: 10rem;
+  display: inline-block;
+}
+
+.container .left__time .tLeft {
+  width: 9rem;
+  display: inline-block;
 }
 
 .container .left span {
@@ -124,14 +171,15 @@ body {
   border-bottom: 1px solid #fff;
   padding-bottom: 1rem;
   margin-bottom: 2rem;
+  font-size: 1.8rem;
 }
 
-.container .quize__details pre {
-  display: initial;
-}
-
-.container .quize__details pre code {
-  font-size: 2rem;
+.container .quize__details textarea {
+  padding: 1rem 2rem;
+  resize: none;
+  width: 100%;
+  overflow: hidden;
+  font-size: 1.7rem;
 }
 
 .container .quize__question {

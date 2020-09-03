@@ -17,6 +17,11 @@ body {
 	font-weight: 400;
 }
 
+#bell {
+	visibility: hidden;
+	opacity: 0;
+}
+
 @mixin btns($background) {
 	border: 0;
 	outline: 0;
@@ -42,22 +47,27 @@ body {
 	visibility: hidden !important;
 }
 
+.show {
+	display: flex !important;
+}
+
 .starter {
 	position: fixed;
 	left: 0;
 	top: 0;
 	height: 100vh;
 	width: 100vw;
-	background-color: rgba(#000, 0.6);
+	background-color: #000;
 	opacity: 1;
 	visibility: visible;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	z-index: 999;
 
-	display: none;
-	transition: all 1s ease-in-out;
+	//display: none;
+	transition: all 0.5s ease-in-out;
 
 	h3 {
 		font-size: 4rem;
@@ -82,6 +92,36 @@ body {
 	}
 }
 
+.over {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	z-index: 999;
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+
+	.msg {
+		font-size: 3.5rem;
+		text-transform: uppercase;
+		color: #fff;
+		letter-spacing: 1.5px;
+		font-weight: bold;
+	}
+
+	p {
+		font-size: 2.5rem;
+		color: #ce3e09;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+}
+
 .container {
 	width: 60%;
 	padding: 2rem;
@@ -89,8 +129,7 @@ body {
 	background-color: rgba(#000, 0.6);
 	position: relative;
 	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+	transform: translateX(-50%);
 	color: #fff;
 
 	@media only screen and (max-width: 950px) {
@@ -99,16 +138,26 @@ body {
 
 	.left {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
 		font-size: 2.5rem;
 		border-bottom: 2px solid #fff;
 		margin-bottom: 2rem;
 
 		&__question {
 			margin-right: 5rem;
+
+			.qLeft {
+				width: 10rem;
+				display: inline-block;
+			}
 		}
 
-		&__time {}
+		&__time {
+			.tLeft {
+				width: 9rem;
+				display: inline-block;
+			}
+		}
 
 		span {
 			color: #09ce23;
@@ -147,12 +196,14 @@ body {
 			padding-bottom: 1rem;
 			margin-bottom: 2rem;
 
-			pre {
-				display: initial;
+			font-size: 1.8rem;
 
-				code {
-					font-size: 2rem;
-				}
+			textarea {
+				padding: 1rem 2rem;
+				resize: none;
+				width: 100%;
+				overflow: hidden;
+				font-size: 1.7rem;
 			}
 		}
 
