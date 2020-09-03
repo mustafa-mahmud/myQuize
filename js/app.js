@@ -13,6 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const total = document.querySelector(".total");
 	const min = document.querySelector(".min");
 	const sec = document.querySelector(".sec");
+	const over = document.querySelector(".over");
 
 	const qBodyUrl = "./qBody.xml";
 	const qQ = "./q.xml";
@@ -23,6 +24,8 @@ window.addEventListener("DOMContentLoaded", () => {
 	let getUserAns = [];
 	let skeppedIndex = 0;
 	let skeppedAns = [];
+	const courseName = "PHP OPERATOR";
+	let correctAns = 0;
 
 	//sound
 	let sound = document.getElementById("bell");
@@ -34,7 +37,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	let less = 0;
 
 	//set total operator questions
-	let totalQ = 5;
+	let totalQ = 10;
 	total.innerHTML = totalQ;
 
 	//clear LS
@@ -72,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	//set minutes
 	function minMin() {
 		minutes--;
-		//sound.play();
+		sound.play();
 		if (minutes < 1) {
 			quizeOver("Time is Over!");
 		}
@@ -183,11 +186,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	//FIXME-quizeOver
 	function quizeOver(msg) {
-		console.log("QUIZE OVER!");
 		answerProcess();
-		/* 	over.classList.add("show");
-			starter.style.display = "none !important";
-			document.querySelector(".msg").innerHTML = msg; */
+		over.classList.add("show");
+		starter.style.display = "none !important";
+		document.querySelector(".msg").innerHTML = msg;
 	}
 
 	//FIXME-showMe
@@ -232,51 +234,204 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	//FIXME-answerProcess
 	async function answerProcess() {
-		//question body get
-		const res3 = await fetch(qBodyUrl);
-		const data3 = await res3.text();
-		const process3 = data3.split("newPart");
-		process3.shift();
+		//get q body
+		const qBodyRes = await fetch(qBodyUrl);
+		const qBodyData = await qBodyRes.text();
+		const qBodyDataProcess = qBodyData.split("newPart");
+		qBodyDataProcess.shift();
 
-		//question get
-		const res4 = await fetch(qQ);
-		const data4 = await res4.text();
-		const process4 = data4.split("newQ");
-		process4.shift();
+		//replace q body line break+space
+		for (let i = 0; i < qBodyDataProcess.length; i++) {
+			qBodyDataProcess[i] = qBodyDataProcess[i].replace(/\r\n/gm, "").trim();
+		}
 
-		//get correct answer
-		const ans = "../ans.xml";
-		const res5 = await fetch(ans);
-		const data5 = await res5.json();
-		const process5 = data5.split("newAns");
-		process5.shift();
-		console.log(process5);
+		//get q
+		const qRes = await fetch(qQ);
+		const qData = await qRes.text();
+		const qDataProcess = qData.split("newQ");
+		qDataProcess.shift();
 
-		//get user answer
-		const userAnswer = JSON.parse(localStorage.getItem("setUserAns"));
+		//replace q line break+space
+		for (let i = 0; i < qDataProcess.length; i++) {
+			qDataProcess[i] = qDataProcess[i].trim().replace(/\r\n/gm, "")
+		}
 
-		//send data to PHP file
-		const check = {
-			title: "check this data please!"
-		};
-		fetch("../mail.php", {
-			method: "post",
-			body: JSON.stringify(check),
-			headers: {
-				"Content-Type": "application/json"
+		//get ans
+		const ansRes = await fetch(ansUrl);
+		const ansData = await ansRes.text();
+		const ansDataProcess = ansData.split("newAns");
+		ansDataProcess.shift();
+
+		//replace ans line break+space
+		for (let i = 0; i < ansDataProcess.length; i++) {
+			ansDataProcess[i] = ansDataProcess[i].replace(/\r\n/gm, "").trim();
+		}
+
+		//get LS
+		const parseUserAns = JSON.parse(localStorage.getItem("setUserAns"));
+
+		//set json data for PHP
+		const jsonData = [
+			[qBodyDataProcess, qDataProcess, ansDataProcess, parseUserAns, courseName]
+		];
+
+		//get total correct ans
+		for (let i = 0; i < jsonData[0][0].length; i++) {
+			let okAns = jsonData[0][2][i];
+			let userAns = jsonData[0][3][i];
+			if (okAns == userAns) {
+				correctAns++;
 			}
-		}).then(function (response) {
-			return response.text();
-		}).then(function (text) {
-			console.log(text);
-		}).catch(function (error) {
-			console.log(error);
-		})
+		}
 
-		//Create answer template
+		//average/percentage of correct numbers
+		let average = Math.round((correctAns / jsonData[0][0].length) * 100) + "%";
 
+		//queston body html table for PHP
+		let qBodyHtml = jsonData[0][0].map((item, index) => {
+			return `
+					<div class='wrapper' style='padding: 20px;'>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td align='center'
+											style='color: #fff;font-size: 30px;display: inline-block;padding: 5px 10px;background-color: #0E6251;'>
+											${index + 1}
+											</td>
+										<td width='30' align='center' height='30' colspan='1'></td>
+
+										<td align='left'>
+											<code style='font-size: 16px;'>
+											${item}
+										</code>
+										</td>
+									</tr>
+								</table>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td width='600' align='center' height='30'></td>
+									</tr>
+								</table>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td align='left'>
+											<span style='font-weight: bold; font-size: 20px;'>Question Was:</span>
+											<span style='font-size: 18px;'>${jsonData[0][1][index]}</span>
+										</td>
+									</tr>
+								</table>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td width='600' align='center' height='10'></td>
+									</tr>
+								</table>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td align='left'>
+											<span style='font-weight: bold;font-size: 20px;'>Your Answer Was:</span>
+											<span
+											style = 'font-weight:bold ;font-size: 18px; ${(jsonData[0][2][index] != jsonData[0][3][index]) ? 'color: #FF0000 ' : 'color: #32CD32'}'>
+											${jsonData[0][3][index]}
+											</span>
+										</td>
+									</tr>
+								</table>
+
+								<table table border = '0'	cellpadding = '0'	cellspacing = '0'	width = '100%'
+								style = '${(jsonData[0][2][index] != jsonData[0][3][index]) ? 'display:table' : 'display:none'}'>
+									<tr>
+										<td align='left'>
+											<span style='font-weight: bold;font-size: 20px;'>Correct Answer Was:</span>
+											<span style='font-size: 18px; color:#32CD32;font-weight:bold'>${(jsonData[0][2][index]!=jsonData[0][3][index])?jsonData[0][2][index]:""}</span>
+										</td>
+									</tr> 
+								</table>
+
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td width='600' align='center' height='10' style='border-bottom: 1px dotted #666;'></td>
+									</tr>
+								</table>
+					</div>
+			`;
+		});
+
+		//calculate toal correct ans + average for PHP
+		let result = `
+								<div class='result'>
+								<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+									<tr>
+										<td width='600' align='center'>
+											<span style='font-weight: bold;font-size: 20px;'>Total Question Was:</span>
+											<span style='font-weight: bold;font-size: 20px;'>
+												${jsonData[0][0].length}
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td width='600' align='center'>
+											<span style='font-weight: bold;font-size: 20px;'>Total Correct Was:</span>
+											<span style='font-weight: bold;font-size: 20px;'>
+												${correctAns}
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td width='600' align='center'>
+											<span style='font-weight: bold;font-size: 20px;'>Total Average Is:</span>
+											<span style='font-weight: bold;font-size: 20px;'>
+												${average}
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+		`;
+
+		//output file it will send to PHP
+		let output = `
+			<table bgcolor='#666666' width='100%' align='center' border='0' cellspacing='0' cellpadding='0'
+		style='padding: 30px 0px;'>
+		<tr>
+			<td align='center'>
+				<table bgcolor='#F6F6F6' align='center' border='0' cellpadding='0' cellspacing='0'>
+					<tr>
+						<td width='600' align='center' style='padding: 20px 10px;'>
+							<table border='0' cellpadding='0' cellspacing='0' style='display: inline-block;'>
+								<tr>
+									<td width='600' align='center'
+										style='font-size: 30px;font-style: italic;font-weight: bold;border-bottom: 2px solid #222;'>
+										${jsonData[0][4]}
+									</td>
+								</tr>
+								<tr>
+									<td width='600' align='center' height='30' colspan='1'></td>
+								</tr>
+							</table>
+							${qBodyHtml}
+
+							${result}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+		`;
+
+		//at last send data to PHP
+		await fetch("./mail.php", {
+			method: "post",
+			body: output,
+			headers: {
+				"Content-Type": "application/text"
+			}
+		});
 	}
-
 
 	//TODO-BOTTOM
 });
